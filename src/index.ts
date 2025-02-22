@@ -12,8 +12,6 @@ const client = new Client({
 client.once('ready', async () => {
 	console.log('Discord bot is ready! 🤖');
 
-	await deployCommands({ guildId: '747591437331202071' });
-
 	const jobService = new JobService(jobs);
 	jobService.start();
 });

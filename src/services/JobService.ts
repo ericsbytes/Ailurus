@@ -11,8 +11,17 @@ class JobService {
 
 	registerJob(job: Job) {}
 
-	start() {
-		this.jobs.forEach(job => {
+	async start() {
+		await Promise.all(
+			this.jobs
+				.filter(job => job.onStart)
+				.map(async job => {
+					console.log(`Starting job immediately: ${job.name}`);
+					await job.action();
+				})
+		);
+
+		this.jobs.forEach(async job => {
 			console.log(`Starting job: ${job.name}`);
 
 			cron.schedule(job.schedule, async () => {
