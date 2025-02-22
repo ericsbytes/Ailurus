@@ -14,7 +14,7 @@ datasource db {
 }
 
 model RssFeed {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   url         String
-  lastRefresh DateTime?
+  lastRefresh DateTime @default(now())
 }
