@@ -1,9 +1,18 @@
-import { CommandInteraction, SlashCommandBuilder } from 'discord.js';
+import {
+	CommandInteraction,
+	MessageFlags,
+	SlashCommandBuilder,
+} from 'discord.js';
 
 export const data = new SlashCommandBuilder()
 	.setName('ping')
 	.setDescription('Replies with Pong!');
 
 export async function execute(interaction: CommandInteraction) {
-	return interaction.reply('Pong!');
+	const ping = Date.now() - interaction.createdTimestamp;
+
+	return interaction.reply({
+		content: `🏓 \`${ping}ms\``,
+		flags: MessageFlags.Ephemeral,
+	});
 }
