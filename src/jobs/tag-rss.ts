@@ -1,7 +1,6 @@
 import Parser from 'rss-parser';
 
 import { Job } from '../types/job';
-import { Client } from 'discord.js';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -23,6 +22,7 @@ const parser = new Parser({
 export const tagRss: Job = {
 	name: 'tag-rss',
 	schedule: '* * * * *',
+	// schedule: "0 * * * *",
 	onStart: true,
 	async action() {
 		console.log('Checking for new posts...');
