@@ -13,8 +13,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model RssFeed {
+model Tags {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   url         String
+  lastRefresh DateTime @default(now())
+}
+
+model Bookmarks {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  listingsUrl String
   lastRefresh DateTime @default(now())
 }

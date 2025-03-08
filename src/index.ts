@@ -12,8 +12,8 @@ const client = new Client({
 client.once('ready', async () => {
 	console.log('Discord bot is ready! 🤖');
 
-	const jobService = new JobService(jobs);
-	jobService.start();
+	const jobService = new JobService(client, jobs);
+	await jobService.start();
 });
 
 client.on('guildCreate', async guild => {
@@ -43,4 +43,4 @@ client.on('messageCreate', message => {
 	console.log(`${message.member.displayName} sent: ${message.content}`);
 });
 
-client.login(config.TOKEN);
+client.login(config.bot.token);

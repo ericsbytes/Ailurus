@@ -1,17 +1,24 @@
 import { EmbedBuilder } from 'discord.js';
 import { Work } from '../types/work';
+import palette from '../constants/palette';
 import emojis from '../constants/emojis';
 
-export default class NewWork {
-	constructor(data: Work) {
-		console.log('NewWork');
+const SUMMARY_MAX_LENGTH = 1020;
+const SUMMARY_TRUNCATE_LENGTH = 1014;
 
-		const newEmbed = new EmbedBuilder()
+export default class NewWork {
+	work: Work;
+	embed: EmbedBuilder;
+
+	constructor(data: Work) {
+		this.work = data;
+
+		this.embed = new EmbedBuilder()
 			.setTitle(data.title)
 			.setURL(data.link)
 			.setAuthor({
 				name: data.author,
-				url: `https://archiveofourown.org/users/acemarry/pseuds/${data.author}/`,
+				url: `https://archiveofourown.org/users/${data.author}/pseuds/${data.author}/`,
 			})
 			.setDescription(`-# ${data.fandom}`)
 			.addFields(
@@ -33,8 +40,9 @@ export default class NewWork {
 				{
 					name: 'Summary',
 					value: `>>> ${
-						data.summary.length > 1020
-							? data.summary.slice(0, 1014) + ' [...]'
+						data.summary.length > SUMMARY_MAX_LENGTH
+							? data.summary.slice(0, SUMMARY_TRUNCATE_LENGTH) +
+							  ' [...]'
 							: data.summary
 					}`,
 				},
@@ -59,12 +67,19 @@ export default class NewWork {
 				}
 			)
 			.setFooter({
-				text: `${
-					data.published == data.lastUpdated
+				text:
+					data.published === data.lastUpdated
 						? 'This is a new work.'
-						: 'This is an updated work.'
-				}`,
+						: 'This is an updated work.',
 			})
-			.setColor(data.published == data.lastUpdated ? 0xddcaee : 0xffebe0);
+			.setColor(
+				data.published === data.lastUpdated
+					? palette.EMBED.NEW_WORK_COLOR
+					: palette.EMBED.UPDATED_WORK_COLOR
+			);
+	}
+
+	getEmbed() {
+		return this.embed;
 	}
 }

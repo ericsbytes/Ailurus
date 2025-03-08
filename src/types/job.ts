@@ -1,6 +1,9 @@
+import { Client } from 'discord.js';
+
 export type Job = {
 	name: string;
+	enabled: boolean;
 	schedule: string;
 	onStart: boolean;
-	action: () => Promise<void> | void;
+	action: (client: Client) => Promise<void> | void;
 };

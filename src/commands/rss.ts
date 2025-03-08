@@ -4,7 +4,7 @@ import {
 	SlashCommandBuilder,
 } from 'discord.js';
 
-import { PrismaClient } from '@prisma/client';
+import DataService from '../services/DataService';
 
 export const data = new SlashCommandBuilder()
 	.setName('rss')
@@ -22,21 +22,14 @@ export const data = new SlashCommandBuilder()
 	);
 
 export async function execute(interaction: CommandInteraction) {
-	const prisma = new PrismaClient();
-
-	console.log('SS');
-
 	if (interaction.options.getSubcommand() === 'add') {
-		await prisma.rssFeed.create({
-			data: {
-				url: interaction.options.getString('url') as string,
-			},
-		});
+		await DataService.addFeed(
+			interaction.options.getString('url') as string
+		);
+
 		await interaction.reply({
 			content: 'RSS feed added!',
 			flags: MessageFlags.Ephemeral,
 		});
 	}
-
-	await prisma.$disconnect();
 }
