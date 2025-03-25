@@ -1,27 +1,29 @@
-enum ContentRating {
-	EXPLICIT = 'Explicit',
-	MATURE = 'Mature',
-	TEEN_AND_UP = 'Teen And Up Audiences',
-	GENERAL_AUDIENCE = 'General Audiences',
-	NONE = 'Not Rated',
+export enum ContentRating {
+	EXPLICIT = 'rating-explicit',
+	MATURE = 'rating-mature',
+	TEEN_AND_UP = 'rating-teen',
+	GENERAL_AUDIENCE = 'rating-general-audience',
+	NONE = 'rating-notrated',
 }
-enum Orientation {
-	FEM_FEM = 'F/F',
-	FEM_MALE = 'F/M',
-	GEN = 'Gen',
-	MALE_MALE = 'M/M',
-	MULTI = 'Multi',
-	OTHER = 'Other',
-	NONE = 'None',
+
+export enum Orientation {
+	FEM_FEM = 'category-femslash',
+	FEM_MALE = 'category-het',
+	GEN = 'category-gen',
+	MALE_MALE = 'category-slash',
+	MULTI = 'category-multi',
+	OTHER = 'category-other',
+	NONE = 'category-none',
 }
-enum ContentWarning {
-	CHOSE_NOT_TO_WARN = 'Creator Chose Not To Use Archive Warnings',
-	WARNINGS_APPLY = 'Warnings Apply',
-	EXTERNAL = 'External',
-	NONE = 'No Archive Warnings Apply',
+
+export enum ContentWarning {
+	CHOSE_NOT_TO_WARN = 'warning-choosenotto',
+	WARNINGS_APPLY = 'warning-yes',
+	NONE = 'warning-no',
 }
-enum Completion {
-	COMPLETE = 'Complete Work',
-	INCOMPLETE = 'Incomplete Work',
-	NONE = 'Unknown',
+
+export enum Completion {
+	COMPLETE = 'complete-yes',
+	INCOMPLETE = 'complete-no',
+	EXTERNAL = 'warning-external',
 }

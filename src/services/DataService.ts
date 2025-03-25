@@ -22,11 +22,15 @@ class DataService {
 		});
 	}
 
-	static async getAllFeeds() {
+	static async getAllTags() {
 		console.log('Getting all feeds');
 		console.log(await this.db.tags.findMany());
 
 		return await this.db.tags.findMany();
+	}
+
+	static async getAllFeeds() {
+		return await this.db.ao3Feeds.findMany();
 	}
 }
 export default DataService;

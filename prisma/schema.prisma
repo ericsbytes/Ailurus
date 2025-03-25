@@ -19,8 +19,9 @@ model Tags {
   lastRefresh DateTime @default(now())
 }
 
-model Bookmarks {
+model Ao3Feeds {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  listingsUrl String
+  url         String
+  channel     String
   lastRefresh DateTime @default(now())
 }

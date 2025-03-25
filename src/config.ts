@@ -9,6 +9,6 @@ if (!TOKEN || !CLIENT_ID) {
 }
 
 export const config = {
-	bot: { token: TOKEN, client_id: CLIENT_ID },
+	bot: { token: TOKEN, clientId: CLIENT_ID },
 	ao3: { username: AO3_USERNAME, password: AO3_PASSWORD },
 };

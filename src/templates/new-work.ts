@@ -3,8 +3,13 @@ import { Work } from '../types/work';
 import palette from '../constants/palette';
 import emojis from '../constants/emojis';
 
-const SUMMARY_MAX_LENGTH = 1020;
 const SUMMARY_TRUNCATE_LENGTH = 1014;
+
+function truncate(str: string) {
+	return str.length > SUMMARY_TRUNCATE_LENGTH
+		? str.slice(0, SUMMARY_TRUNCATE_LENGTH) + ' [...]'
+		: str;
+}
 
 export default class NewWork {
 	work: Work;
@@ -17,10 +22,10 @@ export default class NewWork {
 			.setTitle(data.title)
 			.setURL(data.link)
 			.setAuthor({
-				name: data.author,
-				url: `https://archiveofourown.org/users/${data.author}/pseuds/${data.author}/`,
+				name: data.authors.join(', '),
+				url: `https://archiveofourown.org/users/${data.authors[0]}/pseuds/${data.authors[0]}/`,
 			})
-			.setDescription(`-# ${data.fandom}`)
+			.setDescription(`-# ${data.fandoms.join(', ')}`)
 			.addFields(
 				{
 					name: 'Warnings',
@@ -32,19 +37,22 @@ export default class NewWork {
 				},
 				{
 					name: 'Tags',
-					value: [
-						...data.pairings.map(tag => `**\`${tag}\`**`),
-						...data.tags.map(tag => `\`${tag}\``),
-					].join(', '),
+					value: truncate(
+						[
+							...data.warnings.map(tag => `__**\`${tag}\`**__`),
+							...data.pairings.map(tag => `**\`${tag}\`**`),
+							...data.tags.map(tag => `\`${tag}\``),
+						].join(', ')
+					),
 				},
 				{
 					name: 'Summary',
-					value: `>>> ${
-						data.summary.length > SUMMARY_MAX_LENGTH
-							? data.summary.slice(0, SUMMARY_TRUNCATE_LENGTH) +
-							  ' [...]'
-							: data.summary
-					}`,
+					value: truncate(`>>> ${data.summary}`),
+				},
+				{
+					name: 'Word Count',
+					value: `${data.wordCount.toLocaleString()}`,
+					inline: true,
 				},
 				{
 					name: 'Chapters',
@@ -57,23 +65,16 @@ export default class NewWork {
 						data.lastUpdated.getTime() / 1000
 					)}:D>`,
 					inline: true,
-				},
-				{
-					name: 'Published',
-					value: `<t:${Math.floor(
-						data.published.getTime() / 1000
-					)}:D>`,
-					inline: true,
 				}
 			)
 			.setFooter({
 				text:
-					data.published === data.lastUpdated
+					data.chapters === 1
 						? 'This is a new work.'
 						: 'This is an updated work.',
 			})
 			.setColor(
-				data.published === data.lastUpdated
+				data.chapters == 1
 					? palette.EMBED.NEW_WORK_COLOR
 					: palette.EMBED.UPDATED_WORK_COLOR
 			);

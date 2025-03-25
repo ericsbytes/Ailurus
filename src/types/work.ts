@@ -1,8 +1,15 @@
+import {
+	ContentRating,
+	Orientation,
+	ContentWarning,
+	Completion,
+} from '../enums/warnings';
+
 export type Work = {
 	// META DATA
 	title: string;
 	link: string;
-	author: string;
+	authors: string[];
 
 	// ICONS
 	contentRating: ContentRating;
@@ -11,14 +18,15 @@ export type Work = {
 	completion: Completion;
 
 	// CONTENT
-	fandom: boolean;
+	fandoms: string[];
+	warnings: string[];
 	pairings: string[];
 	tags: string[];
 	summary: string;
 
 	// STATS
-	chapters: number;
-	totalChapters: number;
+	wordCount: Number;
+	chapters: Number;
+	totalChapters: Number;
 	lastUpdated: Date;
-	published: Date;
 };

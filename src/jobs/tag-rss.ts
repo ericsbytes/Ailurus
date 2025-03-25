@@ -2,12 +2,10 @@ import Parser from 'rss-parser';
 import cheerio from 'cheerio';
 
 import { Job } from '../types/job';
-import { PrismaClient } from '@prisma/client';
 import { Client } from 'discord.js';
 import { Work } from '../types/work';
 import DataService from '../services/DataService';
 
-const prisma = new PrismaClient();
 const parser = new Parser({
 	customFields: {
 		feed: ['updated'],

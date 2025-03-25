@@ -4,7 +4,7 @@ import { commands } from './commands';
 
 const commandsData = Object.values(commands).map(command => command.data);
 
-const rest = new REST({ version: '10' }).setToken(config.TOKEN);
+const rest = new REST({ version: '10' }).setToken(config.bot.token);
 
 type DeployCommandsProps = {
 	guildId: string;
@@ -15,7 +15,7 @@ export async function deployCommands({ guildId }: DeployCommandsProps) {
 		console.log('Started refreshing application (/) commands.');
 
 		await rest.put(
-			Routes.applicationGuildCommands(config.CLIENT_ID, guildId),
+			Routes.applicationGuildCommands(config.bot.clientId, guildId),
 			{
 				body: commandsData,
 			}

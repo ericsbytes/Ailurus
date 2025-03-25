@@ -1,3 +1,4 @@
 import { tagRss } from './tag-rss';
+import { checkFeeds } from './check-feeds';
 
-export default [tagRss];
+export default [tagRss, checkFeeds];
