@@ -55,7 +55,7 @@ export default class NewWork {
 				},
 				{
 					name: 'Chapters',
-					value: `${data.chapters}/${data.totalChapters}`,
+					value: `${data.chapters}/${data.totalChapters || '?'}`,
 					inline: true,
 				},
 				{
