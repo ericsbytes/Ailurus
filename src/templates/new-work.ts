@@ -23,7 +23,6 @@ export default class NewWork {
 			.setURL(`https://archiveofourown.org${data.link}`)
 			.setAuthor({
 				name: data.authors.join(', '),
-				url: `https://archiveofourown.org/users/${data.authors[0]}/pseuds/${data.authors[0]}/`,
 			})
 			.setDescription(`-# ${data.fandoms.join(', ')}`)
 			.addFields(

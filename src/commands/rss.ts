@@ -1,13 +1,14 @@
 import {
 	CommandInteraction,
 	MessageFlags,
+	ModalBuilder,
 	SlashCommandBuilder,
 } from 'discord.js';
 
 import DataService from '../services/DataService';
 
 export const data = new SlashCommandBuilder()
-	.setName('rss')
+	.setName('feed')
 	.setDescription('RSS options.')
 	.addSubcommand(subcommand =>
 		subcommand
@@ -23,9 +24,9 @@ export const data = new SlashCommandBuilder()
 
 export async function execute(interaction: CommandInteraction) {
 	if (interaction.options.getSubcommand() === 'add') {
-		await DataService.addFeed(
-			interaction.options.getString('url') as string
-		);
+		const newFeedModal = new ModalBuilder()
+			.setTitle('Add a new feed')
+			.setCustomId('add_feed');
 
 		await interaction.reply({
 			content: 'RSS feed added!',

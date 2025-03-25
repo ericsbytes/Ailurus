@@ -232,15 +232,17 @@ export const checkFeeds: Job = {
 					await (channel as TextChannel).send({
 						content: `${
 							emojis.BOT.PENCIL
-						} **Retrived** latest data for tag **\`${
+						} **Retrived** latest data for tag [**\`${
 							feed.feedName || tagName
-						}\`** <t:${Math.floor(
+						}\`**](${feed.url}) <t:${Math.floor(
 							new Date().getTime() / 1000
 						)}:R>.`,
 					});
 
 					for (const work of [...newWorks, ...updatedWorks]) {
 						const newWork = new NewWork(work);
+
+						console.log(newWork.getEmbed());
 
 						await (channel as TextChannel).send({
 							embeds: [newWork.getEmbed()],
