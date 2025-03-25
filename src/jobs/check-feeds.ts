@@ -129,9 +129,9 @@ async function parseFeed(feed: { url: string }) {
 				tags: allTags,
 				summary: summary,
 
-				wordCount: parseInt(wordCount),
-				chapters: parseInt(chaptersWritten),
-				totalChapters: parseInt(chapters),
+				wordCount: parseInt(wordCount.replace(/,/g, '')),
+				chapters: parseInt(chaptersWritten.replace(/,/g, '')),
+				totalChapters: parseInt(chapters.replace(/,/g, '')),
 				lastUpdated: new Date(lastUpdated),
 			};
 
