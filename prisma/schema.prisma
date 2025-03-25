@@ -20,8 +20,21 @@ model Tags {
 }
 
 model Ao3Feeds {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String            @id @default(auto()) @map("_id") @db.ObjectId
+  feedName    String?
   url         String
+  init        Boolean           @default(false)
   channel     String
-  lastRefresh DateTime @default(now())
+  lastRefresh DateTime          @default(now())
+  snapshots   Ao3WorkSnapshot[]
+}
+
+model Ao3WorkSnapshot {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  index       Int
+  workId      String
+  chapters    Int
+  lastUpdated DateTime
+  Ao3Feeds    Ao3Feeds? @relation(fields: [ao3FeedsId], references: [id])
+  ao3FeedsId  String?   @db.ObjectId
 }

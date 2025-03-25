@@ -20,7 +20,7 @@ export default class NewWork {
 
 		this.embed = new EmbedBuilder()
 			.setTitle(data.title)
-			.setURL(data.link)
+			.setURL(`https://archiveofourown.org${data.link}`)
 			.setAuthor({
 				name: data.authors.join(', '),
 				url: `https://archiveofourown.org/users/${data.authors[0]}/pseuds/${data.authors[0]}/`,
