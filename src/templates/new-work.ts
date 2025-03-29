@@ -3,12 +3,25 @@ import { Work } from '../types/work';
 import palette from '../constants/palette';
 import emojis from '../constants/emojis';
 
-const SUMMARY_TRUNCATE_LENGTH = 1014;
+const TRUNCATE_LENGTH = 1014;
 
 function truncate(str: string) {
-	return str.length > SUMMARY_TRUNCATE_LENGTH
-		? str.slice(0, SUMMARY_TRUNCATE_LENGTH) + ' [...]'
+	return str.length > TRUNCATE_LENGTH
+		? str.slice(0, TRUNCATE_LENGTH) + ' [...]'
 		: str;
+}
+
+function truncateTags(tagsString: string): string {
+	if (tagsString.length <= TRUNCATE_LENGTH) {
+		return tagsString;
+	}
+
+	const pattern = new RegExp(`^(.{1,${TRUNCATE_LENGTH}})(,\\s[^,]+)?`);
+	const match = pattern.exec(tagsString);
+
+	if (!match) return tagsString.slice(0, TRUNCATE_LENGTH) + ' [...]';
+
+	return `${match[1]}, [...]`;
 }
 
 export default class NewWork {
@@ -36,17 +49,19 @@ export default class NewWork {
 				},
 				{
 					name: 'Tags',
-					value: truncate(
+					value: truncateTags(
 						[
 							...data.warnings.map(tag => `__**\`${tag}\`**__`),
 							...data.pairings.map(tag => `**\`${tag}\`**`),
 							...data.tags.map(tag => `\`${tag}\``),
-						].join(', ')
+						]
+							.join(', ')
+							.trim()
 					),
 				},
 				{
 					name: 'Summary',
-					value: truncate(`>>> ${data.summary}`),
+					value: truncate(`>>> ${data.summary.trim()}`),
 				},
 				{
 					name: 'Word Count',
