@@ -60,9 +60,7 @@ export default class NewWork {
 				},
 				{
 					name: 'Last Updated',
-					value: `<t:${Math.floor(
-						data.lastUpdated.getTime() / 1000
-					)}:D>`,
+					value: `${data.lastUpdated}`,
 					inline: true,
 				}
 			)
