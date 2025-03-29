@@ -17,6 +17,8 @@ client.once('ready', async () => {
 
 	const jobService = new JobService(client, jobs);
 	await jobService.start();
+
+	console.log('Jobs started!');
 });
 
 client.on('guildCreate', async guild => {
@@ -36,14 +38,6 @@ client.on('interactionCreate', async interaction => {
 
 		commands[commandName as keyof typeof commands].execute(interaction);
 	}
-});
-
-client.on('messageCreate', message => {
-	if (!message.member) {
-		// If the message is a DM, stop further execution
-		return;
-	}
-	console.log(`${message.member.displayName} sent: ${message.content}`);
 });
 
 client.login(config.bot.token);
