@@ -222,7 +222,6 @@ export const checkFeeds: Job = {
 						console.log(`work moved up: ${work.title}`);
 						updatedWorks.push(work);
 					}
-					// If work has moved down without timestamp change, it's not considered updated
 				}
 
 				if (feed.init && newWorks.length + updatedWorks.length != 0) {
@@ -231,7 +230,7 @@ export const checkFeeds: Job = {
 							emojis.BOT.PENCIL
 						} **Retrived** latest data for tag [**\`${
 							feed.feedName || tagName
-						}\`**](${feed.url}) <t:${Math.floor(
+						}\`**](<${feed.url}>) <t:${Math.floor(
 							new Date().getTime() / 1000
 						)}:R>.`,
 					});
