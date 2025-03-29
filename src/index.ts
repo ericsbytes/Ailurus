@@ -2,13 +2,18 @@ import { Client } from 'discord.js';
 import { config } from './config';
 import { commands } from './commands';
 import { deployCommands } from './deploy-commands';
+import JobService from './services/JobService';
+import jobs from './jobs';
 
 const client = new Client({
 	intents: ['Guilds', 'GuildMessages', 'DirectMessages', 'MessageContent'],
 });
 
-client.once('ready', () => {
+client.once('ready', async () => {
 	console.log('Discord bot is ready! 🤖');
+
+	const jobService = new JobService(client, jobs);
+	await jobService.start();
 });
 
 client.on('guildCreate', async guild => {
@@ -20,7 +25,12 @@ client.on('interactionCreate', async interaction => {
 		return;
 	}
 	const { commandName } = interaction;
+
+	console.log(`Received command: ${commandName}`);
+
 	if (commands[commandName as keyof typeof commands]) {
+		console.log(`Executing command: ${commandName}`);
+
 		commands[commandName as keyof typeof commands].execute(interaction);
 	}
 });
@@ -33,4 +43,4 @@ client.on('messageCreate', message => {
 	console.log(`${message.member.displayName} sent: ${message.content}`);
 });
 
-client.login(config.TOKEN);
+client.login(config.bot.token);

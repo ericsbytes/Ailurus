@@ -1,0 +1,15 @@
+# Folders
+/.cache
+/.git
+/dist
+/docs
+/misc
+/node_modules
+/temp
+
+# Files
+/npm-debug.log
+.env*
+.flaskenv*
+!.env.project
+!.env.vault
