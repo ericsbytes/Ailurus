@@ -27,6 +27,8 @@ jobs:
                   context: .
                   file: ./Dockerfile
                   push: true
+                  tags: |
+                      ${{ secrets.DOCKER_USERNAME }}/${{ vars.BOT_NAME }}:latest
 
             - name: Deploy Docker container to Droplet
               uses: appleboy/ssh-action@v1
