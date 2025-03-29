@@ -11,6 +11,7 @@ const client = new Client({
 
 client.once('ready', async () => {
 	console.log('Ailurus has started!');
+	console.log(`Logged in as ${client.user?.tag}`);
 
 	await deployGlobalCommands();
 

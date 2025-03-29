@@ -132,7 +132,7 @@ async function parseFeed(feed: { url: string }) {
 				wordCount: parseInt(wordCount.replace(/,/g, '')),
 				chapters: parseInt(chaptersWritten.replace(/,/g, '')),
 				totalChapters: parseInt(chapters.replace(/,/g, '')),
-				lastUpdated: new Date(lastUpdated),
+				lastUpdated: lastUpdated,
 			};
 
 			return workData;
@@ -202,10 +202,7 @@ export const checkFeeds: Job = {
 					}
 
 					// Work exists in snapshots - check if updated by timestamp
-					if (
-						work.lastUpdated.getTime() !==
-						previousSnapshot.lastUpdated.getTime()
-					) {
+					if (work.lastUpdated !== previousSnapshot.lastUpdated) {
 						console.log(`work date changed: ${work.title}`);
 
 						updatedWorks.push(work);

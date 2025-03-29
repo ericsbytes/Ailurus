@@ -13,12 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Tags {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  url         String
-  lastRefresh DateTime @default(now())
-}
-
 model Ao3Feeds {
   id          String            @id @default(auto()) @map("_id") @db.ObjectId
   feedName    String?
@@ -34,7 +28,7 @@ model Ao3WorkSnapshot {
   index       Int
   workId      String
   chapters    Int
-  lastUpdated DateTime
+  lastUpdated String
   Ao3Feeds    Ao3Feeds? @relation(fields: [ao3FeedsId], references: [id])
   ao3FeedsId  String?   @db.ObjectId
 }
