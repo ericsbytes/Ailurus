@@ -28,5 +28,5 @@ export type Work = {
 	wordCount: Number;
 	chapters: Number;
 	totalChapters: Number;
-	lastUpdated: Date;
+	lastUpdated: String;
 };
