@@ -3,7 +3,7 @@ import * as cheerio from 'cheerio';
 
 import { Ao3WorkSnapshot } from '@prisma/client';
 import { Job } from '../types/job';
-import { Channel, Client, TextChannel } from 'discord.js';
+import { Client, TextChannel } from 'discord.js';
 import DataService from '../services/DataService';
 import { Work } from '../types/work';
 import {

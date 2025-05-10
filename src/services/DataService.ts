@@ -1,24 +1,9 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Prisma } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 class DataService {
 	static db: PrismaClient = prisma;
-
-	static async addFeed(url: string) {
-		return await this.db.tags.create({
-			data: {
-				url: url,
-			},
-		});
-	}
-
-	static async getAllTags() {
-		console.log('Getting all feeds');
-		console.log(await this.db.tags.findMany());
-
-		return await this.db.tags.findMany();
-	}
 
 	static async getAllFeeds() {
 		return await this.db.ao3Feeds.findMany();
@@ -45,7 +30,10 @@ class DataService {
 		});
 	}
 
-	static async saveWorkSnapshots(feedId: string, snapshots: any[]) {
+	static async saveWorkSnapshots(
+		feedId: string,
+		snapshots: Prisma.Ao3WorkSnapshotCreateInput[]
+	) {
 		await this.db.ao3WorkSnapshot.deleteMany({
 			where: {
 				ao3FeedsId: feedId,
