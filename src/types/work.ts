@@ -25,8 +25,8 @@ export type Work = {
 	summary: string;
 
 	// STATS
-	wordCount: Number;
-	chapters: Number;
-	totalChapters: Number;
-	lastUpdated: String;
+	wordCount: number;
+	chapters: number;
+	totalChapters: number;
+	lastUpdated: string;
 };

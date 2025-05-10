@@ -1,11 +1,12 @@
 import {
-	CommandInteraction,
+	ChatInputCommandInteraction,
 	MessageFlags,
 	ModalBuilder,
 	SlashCommandBuilder,
 } from 'discord.js';
 
 import DataService from '../services/DataService';
+import emojis from '../constants/emojis';
 
 export const data = new SlashCommandBuilder()
 	.setName('feed')
@@ -22,12 +23,8 @@ export const data = new SlashCommandBuilder()
 			)
 	);
 
-export async function execute(interaction: CommandInteraction) {
+export async function execute(interaction: ChatInputCommandInteraction) {
 	if (interaction.options.getSubcommand() === 'add') {
-		const newFeedModal = new ModalBuilder()
-			.setTitle('Add a new feed')
-			.setCustomId('add_feed');
-
 		await interaction.reply({
 			content: 'RSS feed added!',
 			flags: MessageFlags.Ephemeral,
