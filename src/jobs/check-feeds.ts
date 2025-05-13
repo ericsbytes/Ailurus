@@ -14,6 +14,7 @@ import {
 } from '../enums/warnings';
 import NewWork from '../templates/new-work';
 import emojis from '../constants/emojis';
+import { is } from 'cheerio/dist/commonjs/api/traversing';
 
 function mapSymbolsToEnums(warningsSymbols: string[]) {
 	const mappedValues: { [key: string]: string | null } = {
@@ -162,12 +163,10 @@ export const checkFeeds: Job = {
 
 				const { tagName, works } = await parseFeed(feed);
 
-				// Get previous work snapshots from database
 				const previousSnapshots = (await DataService.getWorkSnapshots(
 					feed.id
 				)) as Ao3WorkSnapshot[];
 
-				// Create maps for faster lookups
 				const previousSnapshotsMap = new Map(
 					previousSnapshots.map(snapshot => [
 						snapshot.workId,
@@ -192,6 +191,17 @@ export const checkFeeds: Job = {
 					const previousSnapshot = previousSnapshotsMap.get(
 						parseIdFromUrl(work.link)
 					);
+
+					if (work.lastUpdated) {
+						const lastUpdatedDate = new Date(work.lastUpdated);
+						if (!isNaN(+lastUpdatedDate)) {
+							const diff =
+								new Date().getTime() -
+								lastUpdatedDate.getTime();
+							const diffInHours = diff / (1000 * 60 * 60);
+							if (diffInHours > 24) continue;
+						}
+					}
 
 					if (!previousSnapshot) {
 						// Work ID not in snapshots - it's a new work
