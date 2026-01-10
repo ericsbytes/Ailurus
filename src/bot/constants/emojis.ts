@@ -3,7 +3,7 @@ import {
 	ContentRating,
 	ContentWarning,
 	Orientation,
-} from '../enums/warnings';
+} from '../../enums/warnings';
 
 export default {
 	AO3: {

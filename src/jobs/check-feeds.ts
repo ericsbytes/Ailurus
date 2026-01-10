@@ -13,8 +13,7 @@ import {
 	Completion,
 } from '../enums/warnings';
 import NewWork from '../templates/new-work';
-import emojis from '../constants/emojis';
-import { is } from 'cheerio/dist/commonjs/api/traversing';
+import emojis from '../bot/constants/emojis';
 
 function mapSymbolsToEnums(warningsSymbols: string[]) {
 	const mappedValues: { [key: string]: string | null } = {
@@ -144,7 +143,7 @@ async function parseFeed(feed: { url: string }) {
 
 export const checkFeeds: Job = {
 	name: 'check-feeds',
-	enabled: true,
+	enabled: false,
 	schedule: '0 * * * *',
 	onStart: true,
 	async action(client: Client) {

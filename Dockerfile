@@ -5,6 +5,8 @@ RUN corepack enable
 COPY . /app
 WORKDIR /app
 
+RUN curl -sfS https://dotenvx.sh/install.sh | sh
+
 FROM base AS deps
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm fetch --frozen-lockfile
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
@@ -18,4 +20,4 @@ FROM base
 COPY --from=deps /app/node_modules /app/node_modules
 COPY --from=build /app/dist /app/dist
 ENV NODE_ENV="production"
-CMD [ "pnpm", "start" ]
+CMD [ "dotenvx", "run", "--", "pnpm", "start" ]

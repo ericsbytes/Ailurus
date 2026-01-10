@@ -4,5 +4,4 @@ dist
 logs
 .env*
 .flaskenv*
-!.env.project
-!.env.vault
+!.env.production
