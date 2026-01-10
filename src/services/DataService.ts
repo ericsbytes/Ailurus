@@ -5,6 +5,27 @@ const prisma = new PrismaClient();
 class DataService {
 	static db: PrismaClient = prisma;
 
+	static async getCourses() {
+		return await this.db.course.findMany();
+	}
+
+	static async addCourse(crn: number, ping: string) {
+		return await this.db.course.create({
+			data: {
+				crn: crn,
+				ping: ping,
+			},
+		});
+	}
+
+	static async removeCourse(crn: number) {
+		return await this.db.course.deleteMany({
+			where: {
+				crn: crn,
+			},
+		});
+	}
+
 	static async getAllFeeds() {
 		return await this.db.ao3Feeds.findMany();
 	}

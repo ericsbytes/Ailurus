@@ -32,3 +32,9 @@ model Ao3WorkSnapshot {
   Ao3Feeds    Ao3Feeds? @relation(fields: [ao3FeedsId], references: [id])
   ao3FeedsId  String?   @db.ObjectId
 }
+
+model Course {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  crn  Int    @unique
+  ping String
+}
