@@ -9,5 +9,7 @@
 
 # Files
 /npm-debug.log
-.env
-.env.keys
+.env*
+.flaskenv*
+!.env.project
+!.env.vault

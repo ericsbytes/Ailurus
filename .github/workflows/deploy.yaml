@@ -43,5 +43,5 @@ jobs:
                       docker rm ${{ vars.BOT_NAME }} || true
                       docker run -d \
                         --restart unless-stopped \
-                        -e "DOTENV_PRIVATE_KEY_PRODUCTION=${{ secrets.DOTENV_KEY }}"\
+                        -e DOTENV_KEY="${{ secrets.DOTENV_KEY }}"\
                         --name ${{ vars.BOT_NAME }} ${{ secrets.DOCKER_USERNAME }}/${{ vars.BOT_NAME }}:latest

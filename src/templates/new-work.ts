@@ -1,7 +1,7 @@
 import { EmbedBuilder } from 'discord.js';
 import { Work } from '../types/work';
-import palette from '../bot/constants/palette';
-import emojis from '../bot/constants/emojis';
+import palette from '../constants/palette';
+import emojis from '../constants/emojis';
 
 const TRUNCATE_LENGTH = 1014;
 
