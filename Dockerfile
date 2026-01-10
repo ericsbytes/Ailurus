@@ -16,8 +16,7 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run build
 
 FROM base
-RUN curl -sfS https://dotenvx.sh/install.sh | sh
 COPY --from=deps /app/node_modules /app/node_modules
 COPY --from=build /app/dist /app/dist
 ENV NODE_ENV="production"
-CMD [ "dotenvx", "run", "-f", ".env.production", "--", "pnpm", "start" ]
+CMD [ "pnpx", "dotenvx", "run", "-f", ".env.production", "--", "pnpm", "start" ]
