@@ -143,7 +143,7 @@ async function parseFeed(feed: { url: string }) {
 
 export const checkFeeds: Job = {
 	name: 'check-feeds',
-	enabled: false,
+	enabled: true,
 	schedule: '0 * * * *',
 	onStart: true,
 	async action(client: Client) {
