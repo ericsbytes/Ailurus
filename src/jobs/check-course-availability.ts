@@ -15,8 +15,8 @@ import emojis from '../bot/constants/emojis';
 
 export const checkCourseAvailability: Job = {
 	name: 'check-course-availability',
-	enabled: true,
-	schedule: '*/30 * * * *',
+	enabled: false,
+	schedule: '*/15 * * * *',
 	onStart: true,
 	async action(client: Client) {
 		const courses = await DataService.getCourses();
@@ -35,7 +35,7 @@ export const checkCourseAvailability: Job = {
 							'User-Agent':
 								'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36',
 						},
-					}
+					},
 				);
 
 				console.log(res.data);
@@ -61,7 +61,7 @@ export const checkCourseAvailability: Job = {
 				}
 
 				console.log(
-					`Course ${courseCode} - ${courseSection}: ${seatsAvail} seats available (max ${maxSeats})`
+					`Course ${courseCode} - ${courseSection}: ${seatsAvail} seats available (max ${maxSeats})`,
 				);
 
 				if (!seatsHTML || parseInt(seatsAvail) > 0) {
@@ -72,7 +72,7 @@ export const checkCourseAvailability: Job = {
 					}
 
 					const channel = client.channels.cache.get(
-						channelId
+						channelId,
 					) as TextChannel;
 
 					if (!channel) {
@@ -90,14 +90,14 @@ export const checkCourseAvailability: Job = {
 						.setStyle(ButtonStyle.Link)
 						.setURL(
 							encodeURI(
-								`https://cab.brown.edu/?keyword=${courseCode}&srcdb=${courseTerm}`
-							)
+								`https://cab.brown.edu/?keyword=${courseCode}&srcdb=${courseTerm}`,
+							),
 						);
 
 					const row =
 						new ActionRowBuilder<ButtonBuilder>().addComponents(
 							removeButton,
-							linkButton
+							linkButton,
 						);
 
 					let content: string;
@@ -115,7 +115,7 @@ export const checkCourseAvailability: Job = {
 
 					const collector = message.createMessageComponentCollector({
 						componentType: ComponentType.Button,
-						time: 5 * 60 * 1000,
+						time: 30 * 60 * 1000,
 					});
 
 					collector.on(
@@ -139,7 +139,7 @@ export const checkCourseAvailability: Job = {
 									} catch (err) {
 										console.error(
 											'Failed to send permission denial reply:',
-											err
+											err,
 										);
 									}
 									return;
@@ -156,7 +156,7 @@ export const checkCourseAvailability: Job = {
 								} catch (err) {
 									console.error(
 										'Error removing course:',
-										err
+										err,
 									);
 									if (!interaction.replied) {
 										await interaction.reply({
@@ -165,12 +165,12 @@ export const checkCourseAvailability: Job = {
 										});
 									} else {
 										await interaction.editReply(
-											'Failed to remove course.'
+											'Failed to remove course.',
 										);
 									}
 								}
 							}
-						}
+						},
 					);
 				}
 			} catch (error) {
