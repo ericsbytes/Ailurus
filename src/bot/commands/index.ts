@@ -7,5 +7,5 @@ export const commands = {
 	ping,
 	rss,
 	purge,
-	trackCourse,
+	'track-course': trackCourse,
 };
