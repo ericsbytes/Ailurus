@@ -33,6 +33,13 @@ model Ao3WorkSnapshot {
   ao3FeedsId  String?   @db.ObjectId
 }
 
+model Ao3BookmarkSnapshot {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  workId      String
+  chapters    Int
+  lastUpdated String
+}
+
 model Course {
   id   String @id @default(auto()) @map("_id") @db.ObjectId
   crn  Int    @unique

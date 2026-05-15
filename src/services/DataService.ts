@@ -75,5 +75,25 @@ class DataService {
 			)
 		);
 	}
+
+	static async getAllBookmarks() {
+		return await this.db.ao3BookmarkSnapshot.findMany();
+	}
+
+	static async replaceBookmarks(bookmarks: Prisma.Ao3BookmarkSnapshotCreateInput[]) {
+		await this.db.ao3BookmarkSnapshot.deleteMany();
+
+		return await Promise.all(
+			bookmarks.map(bookmark =>
+				this.db.ao3BookmarkSnapshot.create({
+					data: {
+						workId: bookmark.workId,
+						chapters: bookmark.chapters,
+						lastUpdated: bookmark.lastUpdated,
+					},
+				})
+			)
+		);
+	}
 }
 export default DataService;
