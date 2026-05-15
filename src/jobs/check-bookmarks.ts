@@ -74,6 +74,10 @@ async function parseFeed(feed: { url: string }, client = axios) {
 			.map((i, el) => $(el).text())
 			.get();
 
+		if (!authors.length) {
+			authors.push('Anonymous');
+		}
+
 		const fandoms = $header
 			.find('h5.fandoms.heading > a.tag')
 			.map((i, el) => $(el).text())
@@ -200,15 +204,18 @@ export const checkBookmarks: Job = {
 		for (let page = 1; page <= pageCount; page++) {
 			const pageURL = `${bookmarksURL}&page=${page}`;
 
-			const works: Work[] = await parseFeed({ url: pageURL }, ao3Service.client);
+			const works: Work[] = await parseFeed(
+				{ url: pageURL },
+				ao3Service.client,
+			);
 
 			for (const work of works) {
 				const workId = parseIdFromUrl(work.link);
 
 				console.log(`checking ${work.title}`);
-				
+
 				const existingWork = bookmarks.find(b => b.workId === workId);
-				
+
 				toStore.add(work);
 
 				// if work is not being tracked, track

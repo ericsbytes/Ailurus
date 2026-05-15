@@ -71,6 +71,10 @@ async function parseFeed(feed: { url: string }) {
 				.map((i, el) => $(el).text())
 				.get();
 
+			if (!authors.length) {
+				authors.push('Anonymous');
+			}
+
 			const fandoms = $header
 				.find('h5.fandoms.heading > a.tag')
 				.map((i, el) => $(el).text())
@@ -143,7 +147,7 @@ async function parseFeed(feed: { url: string }) {
 
 export const checkFeeds: Job = {
 	name: 'check-feeds',
-	enabled: false,
+	enabled: true,
 	schedule: '0 * * * *',
 	onStart: true,
 	async action(client: Client) {
